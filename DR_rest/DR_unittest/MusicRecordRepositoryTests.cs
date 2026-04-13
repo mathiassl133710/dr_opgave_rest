@@ -1,3 +1,4 @@
+using DR_rest.Models;
 using DR_rest.Repositories;
 
 namespace DR_unittest;
@@ -164,5 +165,37 @@ public class MusicRecordRepositoryTests
         var result = repo.GetAll(title: "nonexistent").ToList();
 
         Assert.Empty(result);
+    }
+
+    [Fact]
+    public void Add_IncreasesCount()
+    {
+        var repo = CreateRepository();
+        var before = repo.GetAll().Count();
+
+        repo.Add(new MusicRecord { Title = "New Song", Artist = "New Artist", Duration = 200, PublicationYear = 2020 });
+
+        Assert.Equal(before + 1, repo.GetAll().Count());
+    }
+
+    [Fact]
+    public void Add_AssignsUniqueId()
+    {
+        var repo = CreateRepository();
+
+        var record = repo.Add(new MusicRecord { Title = "New Song", Artist = "New Artist", Duration = 200, PublicationYear = 2020 });
+
+        var ids = repo.GetAll().Select(r => r.Id).ToList();
+        Assert.Equal(ids.Count, ids.Distinct().Count());
+    }
+
+    [Fact]
+    public void Add_ReturnsRecordWithId()
+    {
+        var repo = CreateRepository();
+
+        var record = repo.Add(new MusicRecord { Title = "New Song", Artist = "New Artist", Duration = 200, PublicationYear = 2020 });
+
+        Assert.True(record.Id > 0);
     }
 }

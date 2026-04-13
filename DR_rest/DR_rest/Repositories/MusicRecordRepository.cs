@@ -23,4 +23,11 @@ public class MusicRecordRepository : IMusicRecordRepository
 
         return query.ToList();
     }
+
+    public MusicRecord Add(MusicRecord record)
+    {
+        record.Id = _records.Count > 0 ? _records.Max(r => r.Id) + 1 : 1;
+        _records.Add(record);
+        return record;
+    }
 }

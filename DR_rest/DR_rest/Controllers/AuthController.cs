@@ -33,7 +33,7 @@ public class AuthController : ControllerBase
             return Unauthorized("Invalid username or password.");
 
         var token = GenerateToken(request.Username, role);
-        return Ok(new { token });
+        return Ok(new { token, role });
     }
 
     private string GenerateToken(string username, string role)

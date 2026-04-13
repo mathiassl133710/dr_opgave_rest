@@ -24,4 +24,20 @@ public class MusicRecordsController : ControllerBase
     {
         return Ok(_repository.GetAll(title, artist));
     }
+
+    // POST api/musicrecords
+    [HttpPost]
+    [Authorize(Roles = "admin")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public ActionResult<MusicRecord> Add([FromBody] MusicRecord record)
+    {
+        if (string.IsNullOrWhiteSpace(record.Title) || string.IsNullOrWhiteSpace(record.Artist))
+            return BadRequest("Title and Artist are required.");
+
+        var created = _repository.Add(record);
+        return CreatedAtAction(nameof(GetAll), new { }, created);
+    }
 }
