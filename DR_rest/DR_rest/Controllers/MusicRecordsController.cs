@@ -1,11 +1,13 @@
 using DR_rest.Models;
 using DR_rest.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DR_rest.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class MusicRecordsController : ControllerBase
 {
     private readonly IMusicRecordRepository _repository;
