@@ -54,4 +54,22 @@ public class MusicRecordsController : ControllerBase
         if (!deleted) return NotFound();
         return NoContent();
     }
+
+    // PUT api/musicrecords/{id}
+    [HttpPut("{id}")]
+    [Authorize(Roles = "admin")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult<MusicRecord> Update(int id, [FromBody] MusicRecord record)
+    {
+        if (string.IsNullOrWhiteSpace(record.Title) || string.IsNullOrWhiteSpace(record.Artist))
+            return BadRequest("Title and Artist are required.");
+
+        var updated = _repository.Update(id, record);
+        if (updated == null) return NotFound();
+        return Ok(updated);
+    }
 }

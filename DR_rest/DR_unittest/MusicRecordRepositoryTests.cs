@@ -229,4 +229,37 @@ public class MusicRecordRepositoryTests
 
         Assert.False(result);
     }
+
+    [Fact]
+    public void Update_ChangesRecordData()
+    {
+        var repo = CreateRepository();
+
+        repo.Update(1, new MusicRecord { Title = "Updated Title", Artist = "Updated Artist", Duration = 999, PublicationYear = 2000 });
+
+        var record = repo.GetAll().First(r => r.Id == 1);
+        Assert.Equal("Updated Title", record.Title);
+        Assert.Equal("Updated Artist", record.Artist);
+    }
+
+    [Fact]
+    public void Update_ReturnsUpdatedRecord()
+    {
+        var repo = CreateRepository();
+
+        var result = repo.Update(1, new MusicRecord { Title = "Updated", Artist = "Artist", Duration = 100, PublicationYear = 2000 });
+
+        Assert.NotNull(result);
+        Assert.Equal("Updated", result.Title);
+    }
+
+    [Fact]
+    public void Update_ReturnsNull_WhenRecordNotFound()
+    {
+        var repo = CreateRepository();
+
+        var result = repo.Update(999, new MusicRecord { Title = "X", Artist = "Y", Duration = 1, PublicationYear = 2000 });
+
+        Assert.Null(result);
+    }
 }

@@ -39,4 +39,16 @@ public class MusicRecordRepository : IMusicRecordRepository
         _records.Remove(record);
         return true;
     }
+
+    public MusicRecord? Update(int id, MusicRecord updated)
+    {
+        var record = _records.FirstOrDefault(r => r.Id == id);
+        if (record == null) return null;
+
+        record.Title = updated.Title;
+        record.Artist = updated.Artist;
+        record.Duration = updated.Duration;
+        record.PublicationYear = updated.PublicationYear;
+        return record;
+    }
 }
