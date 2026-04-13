@@ -2,6 +2,42 @@ using DR_rest.Repositories;
 
 namespace DR_unittest;
 
+public class UserRepositoryTests
+{
+    private UserRepository CreateRepository() => new UserRepository();
+
+    [Fact]
+    public void Validate_CorrectCredentials_ReturnsSuccess()
+    {
+        var repo = CreateRepository();
+
+        var (success, role) = repo.Validate("admin", "password123!");
+
+        Assert.True(success);
+        Assert.Equal("admin", role);
+    }
+
+    [Fact]
+    public void Validate_WrongPassword_ReturnsFail()
+    {
+        var repo = CreateRepository();
+
+        var (success, _) = repo.Validate("admin", "wrongpassword");
+
+        Assert.False(success);
+    }
+
+    [Fact]
+    public void Validate_UnknownUser_ReturnsFail()
+    {
+        var repo = CreateRepository();
+
+        var (success, _) = repo.Validate("unknown", "password");
+
+        Assert.False(success);
+    }
+}
+
 public class MusicRecordRepositoryTests
 {
     private MusicRecordRepository CreateRepository() => new MusicRecordRepository();
@@ -56,5 +92,77 @@ public class MusicRecordRepositoryTests
         var ids = repo.GetAll().Select(r => r.Id).ToList();
 
         Assert.Equal(ids.Count, ids.Distinct().Count());
+    }
+
+    [Fact]
+    public void GetAll_FilterByTitle_ReturnsMatchingRecords()
+    {
+        var repo = CreateRepository();
+
+        var result = repo.GetAll(title: "Bohemian").ToList();
+
+        Assert.Single(result);
+        Assert.Equal("Bohemian Rhapsody", result[0].Title);
+    }
+
+    [Fact]
+    public void GetAll_FilterByTitle_IsCaseInsensitive()
+    {
+        var repo = CreateRepository();
+
+        var result = repo.GetAll(title: "bohemian").ToList();
+
+        Assert.Single(result);
+    }
+
+    [Fact]
+    public void GetAll_FilterByArtist_ReturnsMatchingRecords()
+    {
+        var repo = CreateRepository();
+
+        var result = repo.GetAll(artist: "Queen").ToList();
+
+        Assert.Single(result);
+        Assert.Equal("Queen", result[0].Artist);
+    }
+
+    [Fact]
+    public void GetAll_FilterByArtist_IsCaseInsensitive()
+    {
+        var repo = CreateRepository();
+
+        var result = repo.GetAll(artist: "queen").ToList();
+
+        Assert.Single(result);
+    }
+
+    [Fact]
+    public void GetAll_FilterByTitleAndArtist_ReturnsBothMatching()
+    {
+        var repo = CreateRepository();
+
+        var result = repo.GetAll(title: "Bohemian", artist: "Queen").ToList();
+
+        Assert.Single(result);
+    }
+
+    [Fact]
+    public void GetAll_FilterByTitleAndArtist_NoMatch_ReturnsEmpty()
+    {
+        var repo = CreateRepository();
+
+        var result = repo.GetAll(title: "Bohemian", artist: "Nirvana").ToList();
+
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public void GetAll_FilterWithNoMatch_ReturnsEmpty()
+    {
+        var repo = CreateRepository();
+
+        var result = repo.GetAll(title: "nonexistent").ToList();
+
+        Assert.Empty(result);
     }
 }
