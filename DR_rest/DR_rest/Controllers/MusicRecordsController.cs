@@ -15,11 +15,11 @@ public class MusicRecordsController : ControllerBase
         _repository = repository;
     }
 
-    // GET api/musicrecords
+    // GET api/musicrecords?title=...&artist=...
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public ActionResult<IEnumerable<MusicRecord>> GetAll()
+    public ActionResult<IEnumerable<MusicRecord>> GetAll([FromQuery] string? title, [FromQuery] string? artist)
     {
-        return Ok(_repository.GetAll());
+        return Ok(_repository.GetAll(title, artist));
     }
 }

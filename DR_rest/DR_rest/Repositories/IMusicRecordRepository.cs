@@ -4,5 +4,5 @@ namespace DR_rest.Repositories;
 
 public interface IMusicRecordRepository
 {
-    IEnumerable<MusicRecord> GetAll();
+    IEnumerable<MusicRecord> GetAll(string? title = null, string? artist = null);
 }
