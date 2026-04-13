@@ -30,4 +30,13 @@ public class MusicRecordRepository : IMusicRecordRepository
         _records.Add(record);
         return record;
     }
+
+    public bool Delete(int id)
+    {
+        var record = _records.FirstOrDefault(r => r.Id == id);
+        if (record == null) return false;
+
+        _records.Remove(record);
+        return true;
+    }
 }

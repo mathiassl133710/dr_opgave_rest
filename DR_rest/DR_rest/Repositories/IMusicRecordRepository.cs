@@ -6,4 +6,5 @@ public interface IMusicRecordRepository
 {
     IEnumerable<MusicRecord> GetAll(string? title = null, string? artist = null);
     MusicRecord Add(MusicRecord record);
+    bool Delete(int id);
 }

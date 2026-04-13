@@ -40,4 +40,18 @@ public class MusicRecordsController : ControllerBase
         var created = _repository.Add(record);
         return CreatedAtAction(nameof(GetAll), new { }, created);
     }
+
+    // DELETE api/musicrecords/{id}
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "admin")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult Delete(int id)
+    {
+        var deleted = _repository.Delete(id);
+        if (!deleted) return NotFound();
+        return NoContent();
+    }
 }

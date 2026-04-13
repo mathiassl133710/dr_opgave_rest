@@ -183,7 +183,7 @@ public class MusicRecordRepositoryTests
     {
         var repo = CreateRepository();
 
-        var record = repo.Add(new MusicRecord { Title = "New Song", Artist = "New Artist", Duration = 200, PublicationYear = 2020 });
+        repo.Add(new MusicRecord { Title = "New Song", Artist = "New Artist", Duration = 200, PublicationYear = 2020 });
 
         var ids = repo.GetAll().Select(r => r.Id).ToList();
         Assert.Equal(ids.Count, ids.Distinct().Count());
@@ -197,5 +197,36 @@ public class MusicRecordRepositoryTests
         var record = repo.Add(new MusicRecord { Title = "New Song", Artist = "New Artist", Duration = 200, PublicationYear = 2020 });
 
         Assert.True(record.Id > 0);
+    }
+
+    [Fact]
+    public void Delete_RemovesRecord()
+    {
+        var repo = CreateRepository();
+
+        repo.Delete(1);
+
+        var ids = repo.GetAll().Select(r => r.Id).ToList();
+        Assert.DoesNotContain(1, ids);
+    }
+
+    [Fact]
+    public void Delete_ReturnsTrue_WhenRecordExists()
+    {
+        var repo = CreateRepository();
+
+        var result = repo.Delete(1);
+
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void Delete_ReturnsFalse_WhenRecordNotFound()
+    {
+        var repo = CreateRepository();
+
+        var result = repo.Delete(999);
+
+        Assert.False(result);
     }
 }
