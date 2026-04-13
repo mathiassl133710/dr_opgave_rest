@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="../build/DR_rest.props" />
-</Project>
