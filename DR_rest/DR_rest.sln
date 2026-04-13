@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DR_rest", "DR_rest\DR_rest.csproj", "{5D5BDDD6-209A-43DD-8B06-75C88DF0DE47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DR_unittest", "DR_unittest\DR_unittest.csproj", "{91149276-C309-4260-B9FE-518B6F52FD22}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5D5BDDD6-209A-43DD-8B06-75C88DF0DE47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D5BDDD6-209A-43DD-8B06-75C88DF0DE47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D5BDDD6-209A-43DD-8B06-75C88DF0DE47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D5BDDD6-209A-43DD-8B06-75C88DF0DE47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91149276-C309-4260-B9FE-518B6F52FD22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91149276-C309-4260-B9FE-518B6F52FD22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91149276-C309-4260-B9FE-518B6F52FD22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91149276-C309-4260-B9FE-518B6F52FD22}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
